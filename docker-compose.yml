@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  train:
+    build: .
+    container_name: multitask-training
+    command: python scripts/train.py
+    runtime: nvidia  # Enable GPU
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+
+  inference:
+    build: .
+    container_name: multitask-inference
+    command: python scripts/inference.py
+    runtime: nvidia  # Enable GPU
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
